@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Policies\TaskPolicy;
+use App\Task;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('auth-only',function ($user,$task){
+             return $user->id === $task->user_id;
+        });
     }
 }
